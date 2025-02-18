@@ -1,7 +1,6 @@
 use crate::circuits::BaseCircuit;
 use crate::error::{DroidError, Result};
 use crate::types::DeviceType;
-use crate::utils::ini_to_string;
 use ini::Ini;
 
 pub struct Patch {
@@ -26,11 +25,10 @@ impl Patch {
     /// Convert the patch to an INI string
     pub fn to_string(&self) -> Result<String> {
         let mut output = String::from("# LABELS: master=18\n");
-        let mut ini = Ini::new();
         
         // Add device sections
         for device in &self.devices {
-            ini.with_section(Some(format!("{:?}", device))).set("", "");
+            output.push_str(&format!("[{:?}]\n", device));
         }
         
         // Add circuit sections
@@ -38,19 +36,18 @@ impl Patch {
             let ini_str = circuit.to_ini()?;
             let section = circuit.section();
             
-            // Parse the circuit's INI string and merge it
+            // Parse the circuit's INI string
             let circuit_ini = Ini::load_from_str(&ini_str)
                 .map_err(|e| DroidError::SerializationError(e.to_string()))?;
                 
             if let Some(section_data) = circuit_ini.section(Some(section)) {
+                output.push_str(&format!("\n[{}]\n", section));
                 for (key, value) in section_data.iter() {
-                    ini.with_section(Some(section))
-                       .set(key, value);
+                    output.push_str(&format!("{}={}\n", key, value));
                 }
             }
         }
         
-        output.push_str(&ini_to_string(&ini)?);
         Ok(output)
     }
 }
