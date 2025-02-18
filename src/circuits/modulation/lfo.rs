@@ -75,6 +75,16 @@ impl LFO {
         self.output = Some(CVInput(output.into()));
         self
     }
+
+    pub fn with_sawtooth(mut self, sawtooth: impl Into<String>) -> Self {
+        self.sawtooth = Some(CVInput(sawtooth.into()));
+        self
+    }
+
+    pub fn with_level(mut self, level: impl Into<String>) -> Self {
+        self.level = Some(CVInput(level.into()));
+        self
+    }
 }
 
 impl BaseCircuit for LFO {
