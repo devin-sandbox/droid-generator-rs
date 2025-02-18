@@ -96,10 +96,18 @@ impl BaseCircuit for MotorFader {
         let mut ini = Ini::new();
         let section = Some(self.section());
 
-        // Fields in order matching TypeScript interface
+        // Add properties in exact order to match TypeScript implementation
+        if let Some(savepreset) = &self.savepreset {
+            ini.with_section(section).set("savepreset", &savepreset.0);
+        }
         if let Some(fader) = &self.fader {
             ini.with_section(section).set("fader", &fader.0);
         }
+        if let Some(loadpreset) = &self.loadpreset {
+            ini.with_section(section).set("loadpreset", &loadpreset.0);
+        }
+
+        // Add remaining properties in any order since they're not used in this implementation
         if let Some(sharewithnext) = &self.sharewithnext {
             ini.with_section(section).set("sharewithnext", &sharewithnext.0);
         }
@@ -150,12 +158,6 @@ impl BaseCircuit for MotorFader {
         }
         if let Some(preset) = &self.preset {
             ini.with_section(section).set("preset", &preset.0);
-        }
-        if let Some(loadpreset) = &self.loadpreset {
-            ini.with_section(section).set("loadpreset", &loadpreset.0);
-        }
-        if let Some(savepreset) = &self.savepreset {
-            ini.with_section(section).set("savepreset", &savepreset.0);
         }
         if let Some(clear) = &self.clear {
             ini.with_section(section).set("clear", &clear.0);
