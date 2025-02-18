@@ -25,6 +25,7 @@ impl Patch {
     
     /// Convert the patch to an INI string
     pub fn to_string(&self) -> Result<String> {
+        let mut output = String::from("# LABELS: master=18\n");
         let mut ini = Ini::new();
         
         // Add device sections
@@ -49,7 +50,8 @@ impl Patch {
             }
         }
         
-        ini_to_string(&ini)
+        output.push_str(&ini_to_string(&ini)?);
+        Ok(output)
     }
 }
 
