@@ -70,6 +70,16 @@ impl MotorFader {
         self
     }
 
+    pub fn with_savepreset(mut self, savepreset: impl Into<String>) -> Self {
+        self.savepreset = Some(GateInput(savepreset.into()));
+        self
+    }
+
+    pub fn with_loadpreset(mut self, loadpreset: impl Into<String>) -> Self {
+        self.loadpreset = Some(GateInput(loadpreset.into()));
+        self
+    }
+
     // Add other builder methods as needed
 }
 

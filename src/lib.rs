@@ -5,10 +5,11 @@ pub mod patch;
 pub mod ini;
 pub mod validation;
 pub mod utils;
+pub mod global_state_e4;
 
 pub use circuits::{
     modulation::LFO,
-    io::MotorFader,
+    io::{MotorFader, Button},
     control::Case,
     midi::MidiIn,
     matrix::Mixer,
@@ -22,3 +23,4 @@ pub use patch::*;
 pub use ini::*;
 pub use validation::*;
 pub use utils::*;
+pub use global_state_e4::*;
