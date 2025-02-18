@@ -84,7 +84,9 @@ mod tests {
     #[test]
     fn test_generate_patch() {
         let patch = generate_patch(1).unwrap();
-        assert!(patch.contains("[E4]"));
+        assert!(patch.contains("[p2b8]"));
+        assert!(patch.contains("[e4]"));
+        assert!(patch.contains("[m4]"));
         assert!(patch.contains("[lfo]"));
         assert!(patch.contains("sawtooth=O1"));
         assert!(patch.contains("level=P3.2"));

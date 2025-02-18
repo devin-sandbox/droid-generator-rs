@@ -34,7 +34,7 @@ impl Patch {
         
         // Add device sections
         for device in &self.devices {
-            output.push_str(&format!("[{:?}]\n", device));
+            output.push_str(&format!("[{}]\n", device));
         }
         
         // Add circuit sections
