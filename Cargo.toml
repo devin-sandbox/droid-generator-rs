@@ -1,0 +1,20 @@
+[package]
+name = "droid-generator-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rust-ini = "0.21.1"
+serde = { version = "1.0.217", features = ["derive"] }
+
+[[example]]
+name = "basic_patch"
+path = "examples/basic_patch.rs"
+
+[[example]]
+name = "midi_patch"
+path = "examples/midi_patch.rs"
+
+[[example]]
+name = "mixer_patch"
+path = "examples/mixer_patch.rs"
