@@ -37,10 +37,13 @@ pub fn validate_num_lfos(num: u8) -> Result<u8> {
 
 /// Generates an E4 patch with the specified number of LFOs
 pub fn generate_patch(num_lfos: u8) -> Result<String> {
-    let mut patch = Patch::new(vec![]);  // Use default device list
+    // Validate but don't use numLfos parameter
     let _num_lfos = validate_num_lfos(num_lfos)?;
 
-    // Add main LFO
+    // Create patch with default device list [p2b8, e4, m4]
+    let mut patch = Patch::new(vec![]);
+
+    // Add single LFO regardless of numLfos value
     let lfo = LFO::new("lfo1")
         .with_sawtooth("O1")
         .with_level("P3.2")
@@ -59,7 +62,7 @@ pub fn generate_patch(num_lfos: u8) -> Result<String> {
         .with_button("B1.1");
     patch.add_circuit(load_button);
 
-    // Add motor fader
+    // Add motor fader with preset management
     let fader = MotorFader::new("fader1")
         .with_savepreset("_SAVE")
         .with_fader("1")

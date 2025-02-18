@@ -10,17 +10,26 @@ fn test_validate_num_lfos() {
 
 #[test]
 fn test_generate_patch() {
-    let patch = generate_patch(1).unwrap();
-    assert!(patch.contains("[p2b8]"));
-    assert!(patch.contains("[e4]"));
-    assert!(patch.contains("[m4]"));
-    assert!(patch.contains("[lfo]"));
-    assert!(patch.contains("sawtooth=O1"));
-    assert!(patch.contains("level=P3.2"));
-    assert!(patch.contains("hz=P3.1 * 100"));
-    assert!(patch.contains("[button]"));
-    assert!(patch.contains("shortpress=_SAVE"));
-    assert!(patch.contains("button=B1.2"));
-    assert!(patch.contains("[motorfader]"));
-    assert!(patch.contains("fader=1"));
+    // Test with different numLfos values
+    for num in 1..=8 {
+        let patch = generate_patch(num).unwrap();
+        // Verify device sections
+        assert!(patch.contains("[p2b8]"));
+        assert!(patch.contains("[e4]"));
+        assert!(patch.contains("[m4]"));
+        // Verify single LFO
+        assert!(patch.contains("[lfo]"));
+        assert!(patch.contains("sawtooth=O1"));
+        assert!(patch.contains("level=P3.2"));
+        assert!(patch.contains("hz=P3.1 * 100"));
+        // Verify buttons
+        assert!(patch.contains("[button]"));
+        assert!(patch.contains("shortpress=_SAVE"));
+        assert!(patch.contains("button=B1.2"));
+        // Verify motorfader
+        assert!(patch.contains("[motorfader]"));
+        assert!(patch.contains("fader=1"));
+        assert!(patch.contains("loadpreset=_LOAD"));
+        assert!(patch.contains("savepreset=_SAVE"));
+    }
 }
