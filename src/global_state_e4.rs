@@ -44,25 +44,26 @@ pub fn generate_patch(num_lfos: u8) -> Result<String> {
     let mut patch = Patch::new(vec![]);
 
     // Add single LFO regardless of numLfos value
+    // Add single LFO with exact property order
     let lfo = LFO::new("lfo1")
         .with_sawtooth("O1")
         .with_level("P3.2")
         .with_hz("P3.1 * 100");
     patch.add_circuit(lfo);
 
-    // Add save button
+    // Add save button with exact property order
     let save_button = Button::new("button1")
         .with_shortpress("_SAVE")
         .with_button("B1.2");
     patch.add_circuit(save_button);
 
-    // Add load button
+    // Add load button with exact property order
     let load_button = Button::new("button2")
         .with_shortpress("_LOAD")
         .with_button("B1.1");
     patch.add_circuit(load_button);
 
-    // Add motor fader with preset management
+    // Add motor fader with exact property order
     let fader = MotorFader::new("fader1")
         .with_savepreset("_SAVE")
         .with_fader("1")

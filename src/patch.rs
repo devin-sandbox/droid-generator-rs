@@ -37,8 +37,11 @@ impl Patch {
             output.push_str(&format!("[{}]\n", device));
         }
         
-        // Add circuit sections
-        for circuit in &self.circuits {
+        // Add newline after device sections
+        output.push('\n');
+        
+        // Add circuit sections with newlines between them
+        for (i, circuit) in self.circuits.iter().enumerate() {
             let ini_str = circuit.to_ini()?;
             let section = circuit.section();
             
@@ -47,9 +50,14 @@ impl Patch {
                 .map_err(|e| DroidError::SerializationError(e.to_string()))?;
                 
             if let Some(section_data) = circuit_ini.section(Some(section)) {
-                output.push_str(&format!("\n[{}]\n", section));
+                output.push_str(&format!("[{}]\n", section));
                 for (key, value) in section_data.iter() {
                     output.push_str(&format!("{}={}\n", key, value));
+                }
+                
+                // Add newline between sections, but not after the last one
+                if i < self.circuits.len() - 1 {
+                    output.push('\n');
                 }
             }
         }

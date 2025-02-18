@@ -100,17 +100,23 @@ impl BaseCircuit for LFO {
         let mut ini = Ini::new();
         let section = Some(self.section());
 
+        // Add properties in exact order to match TypeScript implementation
+        if let Some(sawtooth) = &self.sawtooth {
+            ini.with_section(section).set("sawtooth", &sawtooth.0);
+        }
+        if let Some(level) = &self.level {
+            ini.with_section(section).set("level", &level.0);
+        }
+        if let Some(hz) = &self.hz {
+            ini.with_section(section).set("hz", &hz.0);
+        }
+        
+        // Add remaining properties in any order since they're not used in this implementation
         if let Some(rate) = &self.rate {
             ini.with_section(section).set("rate", &rate.0);
         }
         if let Some(taptempo) = &self.taptempo {
             ini.with_section(section).set("taptempo", &taptempo.0);
-        }
-        if let Some(hz) = &self.hz {
-            ini.with_section(section).set("hz", &hz.0);
-        }
-        if let Some(level) = &self.level {
-            ini.with_section(section).set("level", &level.0);
         }
         if let Some(randomize) = &self.randomize {
             ini.with_section(section).set("randomize", &randomize.0);
@@ -144,9 +150,6 @@ impl BaseCircuit for LFO {
         }
         if let Some(square) = &self.square {
             ini.with_section(section).set("square", &square.0);
-        }
-        if let Some(sawtooth) = &self.sawtooth {
-            ini.with_section(section).set("sawtooth", &sawtooth.0);
         }
         if let Some(triangle) = &self.triangle {
             ini.with_section(section).set("triangle", &triangle.0);

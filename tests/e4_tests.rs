@@ -10,26 +10,40 @@ fn test_validate_num_lfos() {
 
 #[test]
 fn test_generate_patch() {
-    // Test with different numLfos values
+    let expected_output = "\
+# LABELS: master=18
+[p2b8]
+[e4]
+[m4]
+
+[lfo]
+sawtooth=O1
+level=P3.2
+hz=P3.1 * 100
+
+[button]
+shortpress=_SAVE
+button=B1.2
+
+[button]
+shortpress=_LOAD
+button=B1.1
+
+[motorfader]
+savepreset=_SAVE
+fader=1
+loadpreset=_LOAD
+";
+
+    // Test with different numLfos values (1-8)
     for num in 1..=8 {
         let patch = generate_patch(num).unwrap();
-        // Verify device sections
-        assert!(patch.contains("[p2b8]"));
-        assert!(patch.contains("[e4]"));
-        assert!(patch.contains("[m4]"));
-        // Verify single LFO
-        assert!(patch.contains("[lfo]"));
-        assert!(patch.contains("sawtooth=O1"));
-        assert!(patch.contains("level=P3.2"));
-        assert!(patch.contains("hz=P3.1 * 100"));
-        // Verify buttons
-        assert!(patch.contains("[button]"));
-        assert!(patch.contains("shortpress=_SAVE"));
-        assert!(patch.contains("button=B1.2"));
-        // Verify motorfader
-        assert!(patch.contains("[motorfader]"));
-        assert!(patch.contains("fader=1"));
-        assert!(patch.contains("loadpreset=_LOAD"));
-        assert!(patch.contains("savepreset=_SAVE"));
+        assert_eq!(patch, expected_output);
     }
+}
+
+#[test]
+fn test_invalid_lfo_count() {
+    assert!(generate_patch(0).is_err());
+    assert!(generate_patch(9).is_err());
 }

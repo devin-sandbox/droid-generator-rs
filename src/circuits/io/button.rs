@@ -97,11 +97,11 @@ impl BaseCircuit for Button {
         let mut ini = Ini::new();
         let section = Some(self.section());
 
-        if let Some(button) = &self.button {
-            ini.with_section(section).set("button", &button.0);
-        }
         if let Some(shortpress) = &self.shortpress {
             ini.with_section(section).set("shortpress", &shortpress.0);
+        }
+        if let Some(button) = &self.button {
+            ini.with_section(section).set("button", &button.0);
         }
         if let Some(longpress) = &self.longpress {
             ini.with_section(section).set("longpress", &longpress.0);
