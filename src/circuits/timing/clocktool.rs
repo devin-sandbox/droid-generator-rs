@@ -1,6 +1,6 @@
 use crate::circuits::{BaseCircuit, CircuitId};
-use crate::error::{DroidError, Result};
-use crate::types::{GateInput, CVInput, BooleanInput};
+use crate::error::Result;
+use crate::types::{GateInput, CVInput};
 use crate::utils::ini_to_string;
 use ini::Ini;
 use serde::{Serialize, Deserialize};

@@ -7,14 +7,14 @@ use droid_generator_rs::{
 #[test]
 fn test_lfo_validation() {
     let lfo = LFO::new("lfo1")
-        .with_rate("1V")
+        .with_rate("1.0")
         .with_hz("440");
     
-    assert!(validate_cv_range("1V", -5.0, 5.0, "rate").is_ok());
+    assert!(validate_cv_range("1.0", -5.0, 5.0, "rate").is_ok());
     assert!(validate_cv_range("440", 0.1, 1000.0, "hz").is_ok());
     
     let ini = lfo.to_ini().unwrap();
-    assert!(ini.contains("rate=1V"));
+    assert!(ini.contains("rate=1.0"));
     assert!(ini.contains("hz=440"));
 }
 

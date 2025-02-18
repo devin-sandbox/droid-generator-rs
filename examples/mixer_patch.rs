@@ -8,11 +8,11 @@ fn main() {
          .with_input(2, "O2");
     
     let lfo1 = LFO::new("lfo1")
-        .with_rate("1V")
+        .with_rate("1.0")
         .with_output("O1");
     
     let lfo2 = LFO::new("lfo2")
-        .with_rate("2V")
+        .with_rate("2.0")
         .with_output("O2");
     
     patch.add_circuit(lfo1);

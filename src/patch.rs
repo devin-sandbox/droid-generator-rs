@@ -41,9 +41,11 @@ impl Patch {
             let circuit_ini = Ini::load_from_str(&ini_str)
                 .map_err(|e| DroidError::SerializationError(e.to_string()))?;
                 
-            for (key, value) in circuit_ini.section(Some(section)).unwrap().iter() {
-                ini.with_section(Some(section))
-                   .set(key, value);
+            if let Some(section_data) = circuit_ini.section(Some(section)) {
+                for (key, value) in section_data.iter() {
+                    ini.with_section(Some(section))
+                       .set(key, value);
+                }
             }
         }
         

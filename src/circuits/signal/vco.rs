@@ -1,5 +1,5 @@
 use crate::circuits::{BaseCircuit, CircuitId};
-use crate::error::{DroidError, Result};
+use crate::error::Result;
 use crate::types::{CVInput, GateInput, BooleanInput};
 use crate::utils::ini_to_string;
 use ini::Ini;

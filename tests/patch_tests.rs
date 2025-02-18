@@ -5,21 +5,22 @@ use droid_generator_rs::{
 #[test]
 fn test_patch_creation() {
     let patch = Patch::new(vec![DeviceType::P2B8]);
-    assert_eq!(patch.to_string().unwrap().contains("[P2B8]"), true);
+    let ini = patch.to_string().unwrap();
+    assert!(ini.contains("[P2B8]"));
 }
 
 #[test]
 fn test_lfo_in_patch() {
     let mut patch = Patch::new(vec![DeviceType::P2B8]);
     let lfo = LFO::new("lfo1")
-        .with_rate("1V")
+        .with_rate("1.0")
         .with_hz("440");
     patch.add_circuit(lfo);
     
     let ini = patch.to_string().unwrap();
     assert!(ini.contains("[P2B8]"));
     assert!(ini.contains("[lfo]"));
-    assert!(ini.contains("rate=1V"));
+    assert!(ini.contains("rate=1.0"));
     assert!(ini.contains("hz=440"));
 }
 
@@ -39,7 +40,7 @@ fn test_motorfader_in_patch() {
 #[test]
 fn test_multiple_devices() {
     let mut patch = Patch::new(vec![DeviceType::P2B8, DeviceType::M4]);
-    let lfo = LFO::new("lfo1").with_rate("1V");
+    let lfo = LFO::new("lfo1").with_rate("1.0");
     let fader = MotorFader::new("fader1").with_fader("1");
     
     patch.add_circuit(lfo);

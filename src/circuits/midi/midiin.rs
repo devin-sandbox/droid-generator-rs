@@ -1,5 +1,5 @@
 use crate::circuits::{BaseCircuit, CircuitId, MidiChannelCircuit};
-use crate::error::{DroidError, Result};
+use crate::error::Result;
 use crate::types::{GateInput, CVInput, EnumInput, BooleanInput};
 use crate::utils::ini_to_string;
 use ini::Ini;
@@ -199,22 +199,16 @@ impl BaseCircuit for MidiIn {
             ini.with_section(section).set("gate2", &gate2.0);
         }
         if let Some(pitch_bend) = &self.pitch_bend {
-            ini.with_section(section).set("pitch_bend", &pitch_bend.0);
+            ini.with_section(section).set("pitchbend", &pitch_bend.0);
         }
         if let Some(mod_wheel) = &self.mod_wheel {
-            ini.with_section(section).set("mod_wheel", &mod_wheel.0);
+            ini.with_section(section).set("modwheel", &mod_wheel.0);
         }
         if let Some(cc_number1) = &self.cc_number1 {
-            ini.with_section(section).set("cc_number1", &cc_number1.0);
-        }
-        if let Some(cc_value1) = &self.cc_value1 {
-            ini.with_section(section).set("cc_value1", &cc_value1.0);
+            ini.with_section(section).set("ccnumber1", &cc_number1.0);
         }
         if let Some(cc_number2) = &self.cc_number2 {
-            ini.with_section(section).set("cc_number2", &cc_number2.0);
-        }
-        if let Some(cc_value2) = &self.cc_value2 {
-            ini.with_section(section).set("cc_value2", &cc_value2.0);
+            ini.with_section(section).set("ccnumber2", &cc_number2.0);
         }
 
         ini_to_string(&ini)

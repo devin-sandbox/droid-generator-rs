@@ -1,4 +1,4 @@
-use crate::error::{DroidError, Result};
+use crate::error::Result;
 use crate::utils::ini_to_string;
 use ini::Ini;
 
