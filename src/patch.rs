@@ -9,8 +9,14 @@ pub struct Patch {
 }
 
 impl Patch {
-    /// Create a new patch with the specified devices
+    /// Create a new patch with the specified devices.
+    /// If no devices are provided, uses the default list [P2B8, E4, M4].
     pub fn new(devices: Vec<DeviceType>) -> Self {
+        let devices = if devices.is_empty() {
+            vec![DeviceType::P2B8, DeviceType::E4, DeviceType::M4]
+        } else {
+            devices
+        };
         Self {
             circuits: Vec::new(),
             devices,
@@ -58,9 +64,20 @@ mod tests {
     
     #[test]
     fn test_new_patch() {
+        let patch = Patch::new(vec![]);
+        assert_eq!(patch.circuits.len(), 0);
+        assert_eq!(patch.devices.len(), 3);
+        assert!(matches!(patch.devices[0], DeviceType::P2B8));
+        assert!(matches!(patch.devices[1], DeviceType::E4));
+        assert!(matches!(patch.devices[2], DeviceType::M4));
+    }
+
+    #[test]
+    fn test_custom_devices() {
         let devices = vec![DeviceType::P2B8];
         let patch = Patch::new(devices);
         assert_eq!(patch.circuits.len(), 0);
         assert_eq!(patch.devices.len(), 1);
+        assert!(matches!(patch.devices[0], DeviceType::P2B8));
     }
 }

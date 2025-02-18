@@ -1,6 +1,6 @@
 use crate::{LFO, MotorFader, Button, Patch};
 use crate::error::{DroidError, Result};
-use crate::types::DeviceType;
+
 
 /// Maximum number of LFOs allowed in a patch
 pub const MAX_ALLOWED_LFOS: u8 = 8;
@@ -37,8 +37,8 @@ pub fn validate_num_lfos(num: u8) -> Result<u8> {
 
 /// Generates an E4 patch with the specified number of LFOs
 pub fn generate_patch(num_lfos: u8) -> Result<String> {
-    let mut patch = Patch::new(vec![DeviceType::E4]);
-    let num_lfos = validate_num_lfos(num_lfos)?;
+    let mut patch = Patch::new(vec![]);  // Use default device list
+    let _num_lfos = validate_num_lfos(num_lfos)?;
 
     // Add main LFO
     let lfo = LFO::new("lfo1")
